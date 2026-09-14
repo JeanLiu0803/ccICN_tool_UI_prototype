@@ -9,9 +9,6 @@ type Case={id:number;name:string;kind:Kind;file:string;fextFiles:string[];nextFi
 type Params=Record<string,string>; type Result={id:number;name:string;metrics:{name:string;value:string;status:'PASS'|'FAIL'}[]}
 const fields=[['symbolRate','Symbol Rate (fb)','GBaud'],['ilPre','IL pre channel','dB'],['ilPost','IL post channel','dB'],['scaling','Scaling factor',''],['aft','Aft','mV'],['ant','Ant','mV'],['ft','ft','GHz'],['fr','fr','GHz'],['tfr','Tfr','ps'],['tnr','Tnr','ps'],['fstart','Fstart','GHz'],['fstop','Fstop','GHz'],['df','df','GHz']] as const
 const specs:Record<string,Params>={
- 'PCIe6 Cable Connector':{symbolRate:'32',ilPre:'25',ilPost:'9.46',scaling:'0.745355992',aft:'800',ant:'1000',ft:'31.53',fr:'24',tfr:'9.27',tnr:'9.27',fstart:'0.01',fstop:'24',df:'0.01'},
- 'PCIe6 Add-in Card':{symbolRate:'32',ilPre:'13',ilPost:'10',scaling:'0.75',aft:'800',ant:'1000',ft:'31.5',fr:'24',tfr:'9.5',tnr:'9.5',fstart:'0.01',fstop:'24',df:'0.01'},
- 'PCIe6 System Board':{symbolRate:'32',ilPre:'18',ilPost:'8',scaling:'0.72',aft:'800',ant:'1000',ft:'31',fr:'24',tfr:'9.8',tnr:'9.8',fstart:'0.01',fstop:'24',df:'0.01'},
  'PCIe5 Cable Connector':{symbolRate:'16',ilPre:'20',ilPost:'8',scaling:'0.7',aft:'800',ant:'1000',ft:'16',fr:'12',tfr:'18.5',tnr:'18.5',fstart:'0.01',fstop:'12',df:'0.01'},
  'Internal PCIe5 Cable':{symbolRate:'32',ilPre:'-24',ilPost:'-6',scaling:'1',aft:'800',ant:'1300',ft:'31.53',fr:'24',tfr:'7.5',tnr:'7.5',fstart:'0.01',fstop:'24',df:'0.01'},
  'Internal PCIe5 Connector':{symbolRate:'32',ilPre:'-29',ilPost:'-6',scaling:'1',aft:'800',ant:'1300',ft:'31.53',fr:'24',tfr:'7.5',tnr:'7.5',fstart:'0.01',fstop:'24',df:'0.01'},
@@ -26,7 +23,7 @@ const seed:Case[]=[{id:1,name:'Case 1',kind:'Single SNP',file:'DUT_SIM.s16p',fex
 function mockResults(cases:Case[]):Result[]{const nums=[['123.456','456.777','123.888'],['198.204','221.350','97.624'],['142.832','312.090','110.452']];return cases.map((c,i)=>({id:c.id,name:c.name,metrics:['Total ccICN','ccICN_NEXT','ccICN_FEXT'].map((name,j)=>({name,value:nums[i%3][j],status:(i+j)%3===1?'FAIL':'PASS'}))}))}
 
 export default function App(){
- const [cases,setCases]=useState(seed),[spec,setSpec]=useState('PCIe6 Cable Connector'),[params,setParams]=useState<Params>({...specs['PCIe6 Cable Connector']})
+ const [cases,setCases]=useState(seed),[spec,setSpec]=useState('Internal PCIe6 Cable'),[params,setParams]=useState<Params>({...specs['Internal PCIe6 Cable']})
  const [caseEdit,setCaseEdit]=useState<Case|null|'new'>(null),[specOpen,setSpecOpen]=useState(false),[powerOpen,setPowerOpen]=useState(false)
  const [results,setResults]=useState<Result[]>([]),[resultSpec,setResultSpec]=useState(''),[expanded,setExpanded]=useState<Set<number>>(new Set()),[loading,setLoading]=useState(false),[toast,setToast]=useState('')
  const modified=useMemo(()=>!!spec&&fields.some(([k])=>params[k]!==specs[spec][k]),[params,spec]); const reason=!cases.length?'Add at least one case.':!spec?'Select a specification preset.':''
