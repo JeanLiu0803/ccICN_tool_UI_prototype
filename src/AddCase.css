@@ -258,6 +258,8 @@
   max-height: 190px;
   overflow-y: auto;
   padding-top: 4px;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .port-options label {
