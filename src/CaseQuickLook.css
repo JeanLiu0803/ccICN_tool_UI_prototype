@@ -1,0 +1,63 @@
+.case-list {
+  overflow: visible;
+}
+
+.case-quick-look {
+  position: relative;
+  min-width: 0;
+}
+
+.quick-look-trigger {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: default;
+}
+
+.quick-look-tooltip {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 8px);
+  left: 0;
+  display: none;
+  width: max-content;
+  min-width: 250px;
+  max-width: 380px;
+  max-height: 360px;
+  padding: 14px 16px;
+  overflow-y: auto;
+  border: 1px solid #cbd5e1;
+  border-radius: 5px;
+  color: #344054;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(20, 31, 46, .16);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.case-quick-look:hover {
+  z-index: 21;
+}
+
+.case-quick-look:hover .quick-look-tooltip {
+  display: grid;
+  gap: 13px;
+}
+
+.quick-look-group {
+  display: grid;
+  gap: 3px;
+}
+
+.quick-look-group b,
+.quick-look-group strong,
+.quick-look-tooltip > strong {
+  color: #253348;
+  font-size: 11px;
+}
+
+.quick-look-file {
+  display: block;
+  overflow-wrap: anywhere;
+}
