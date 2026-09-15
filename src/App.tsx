@@ -95,9 +95,15 @@ function getPinmapCandidates(ports:string[],victim:string){
  return{next,fext}
 }
 function PortMultiSelect({label,ports,selected,change}:{label:string;ports:string[];selected:string[];change:(ports:string[])=>void}){
- const[search,setSearch]=useState('')
+ const[search,setSearch]=useState(''),[anchor,setAnchor]=useState<string|null>(null)
  const visible=ports.filter(port=>port.toLowerCase().includes(search.trim().toLowerCase()))
- const toggle=(port:string)=>change(selected.includes(port)?selected.filter(item=>item!==port):[...selected,port])
- return <label className="pinmap-field"><span>{label}</span><details className="port-multiselect"><summary><span>{selected.length?selected.join(', '):'Select ports...'}</span><small>{selected.length} selected</small></summary><div className="port-popup"><input type="search" placeholder="Search differential port..." value={search} onChange={e=>setSearch(e.target.value)}/><div className="port-tools"><button type="button" onClick={()=>change(ports)}>Select All</button><button type="button" onClick={()=>change([])}>Clear</button></div><div className="port-options">{visible.map(port=><label key={port}><input type="checkbox" checked={selected.includes(port)} onChange={()=>toggle(port)}/><span>{port}</span></label>)}</div></div></details></label>
+ const toggle=(port:string,shiftKey:boolean)=>{
+  if(shiftKey&&anchor){const anchorIndex=visible.indexOf(anchor),portIndex=visible.indexOf(port);if(anchorIndex>=0&&portIndex>=0){const start=Math.min(anchorIndex,portIndex),end=Math.max(anchorIndex,portIndex),range=new Set(visible.slice(start,end+1));change(ports.filter(candidate=>selected.includes(candidate)||range.has(candidate)));return}}
+  change(selected.includes(port)?selected.filter(item=>item!==port):[...selected,port])
+  setAnchor(port)
+ }
+ const selectAll=()=>{change(ports);setAnchor(null)}
+ const clear=()=>{change([]);setAnchor(null)}
+ return <label className="pinmap-field"><span>{label}</span><details className="port-multiselect"><summary><span>{selected.length?selected.join(', '):'Select ports...'}</span><small>{selected.length} selected</small></summary><div className="port-popup"><input type="search" placeholder="Search differential port..." value={search} onChange={e=>setSearch(e.target.value)}/><div className="port-tools"><button type="button" onClick={selectAll}>Select All</button><button type="button" onClick={clear}>Clear</button></div><div className="port-options">{visible.map(port=><label key={port}><input type="checkbox" checked={selected.includes(port)} onChange={event=>toggle(port,(event.nativeEvent as MouseEvent).shiftKey)}/><span>{port}</span></label>)}</div></div></details></label>
 }
 function Chart(){return <div className="chart"><svg viewBox="0 0 660 330"><defs><linearGradient id="area" x2="0" y2="1"><stop stopColor="#2f6fed" stopOpacity=".22"/><stop offset="1" stopColor="#2f6fed" stopOpacity="0"/></linearGradient></defs>{[55,110,165,220,275].map(y=><line key={y} x1="62" y1={y} x2="630" y2={y}/>) }<path className="area" d="M62 247 C105 236 123 219 158 225 S216 199 249 206 S307 167 340 181 S400 142 438 151 S493 111 526 125 S583 77 630 83 L630 275 L62 275Z"/><path className="curve" d="M62 247 C105 236 123 219 158 225 S216 199 249 206 S307 167 340 181 S400 142 438 151 S493 111 526 125 S583 77 630 83"/><line x1="62" y1="24" x2="62" y2="275"/><line x1="62" y1="275" x2="630" y2="275"/>{[0,6,12,18,24].map((x,i)=><text key={x} x={62+i*142} y="298" textAnchor="middle">{x}</text>)}<text x="346" y="324" textAnchor="middle">Frequency (GHz)</text><text x="16" y="160" textAnchor="middle" transform="rotate(-90 16 160)">Power Sum (dB)</text></svg></div>}
