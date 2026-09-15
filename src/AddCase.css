@@ -169,9 +169,10 @@
   min-width: 0;
 }
 
-.port-multiselect summary {
+.port-multiselect .port-summary {
   position: relative;
   display: grid;
+  width: 100%;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   gap: 12px;
@@ -183,13 +184,10 @@
   background: #fff;
   cursor: pointer;
   list-style: none;
+  text-align: left;
 }
 
-.port-multiselect summary::-webkit-details-marker {
-  display: none;
-}
-
-.port-multiselect summary::after {
+.port-multiselect .port-summary::after {
   position: absolute;
   top: 50%;
   right: 10px;
@@ -201,13 +199,13 @@
   pointer-events: none;
 }
 
-.port-multiselect summary > span {
+.port-multiselect .port-summary > span {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.port-multiselect summary small {
+.port-multiselect .port-summary small {
   grid-column: 2;
   grid-row: 1;
   color: #687588;
