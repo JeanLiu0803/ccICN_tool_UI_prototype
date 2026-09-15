@@ -135,3 +135,150 @@
   outline: 0;
   box-shadow: 0 0 0 2px rgba(55, 120, 223, .13);
 }
+
+.pinmap-fields {
+  display: grid;
+  gap: 15px;
+}
+
+.pinmap-field {
+  display: grid;
+  grid-template-columns: 225px minmax(0, 1fr);
+  align-items: start;
+  gap: 14px;
+  color: #344054;
+  font-size: 13px;
+}
+
+.pinmap-field > span {
+  padding-top: 8px;
+}
+
+.pinmap-field > select {
+  width: 180px;
+  min-height: 34px;
+  padding: 6px 30px 6px 9px;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  color: #1d2939;
+  background: #fff;
+}
+
+.port-multiselect {
+  position: relative;
+  min-width: 0;
+}
+
+.port-multiselect summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  min-height: 34px;
+  padding: 6px 9px;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  color: #59677a;
+  background: #fff;
+  cursor: pointer;
+  list-style: none;
+}
+
+.port-multiselect summary::-webkit-details-marker {
+  display: none;
+}
+
+.port-multiselect summary::after {
+  content: "▾";
+  color: #687588;
+  font-size: 10px;
+}
+
+.port-multiselect summary > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.port-multiselect summary small {
+  grid-column: 2;
+  grid-row: 1;
+  margin-right: 16px;
+  color: #687588;
+  white-space: nowrap;
+}
+
+.port-popup {
+  position: absolute;
+  z-index: 5;
+  top: calc(100% + 5px);
+  right: 0;
+  left: 0;
+  padding: 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 5px;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(20, 31, 46, .14);
+}
+
+.port-popup > input {
+  width: 100%;
+  min-height: 32px;
+  padding: 5px 8px;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  outline: 0;
+}
+
+.port-popup > input:focus {
+  border-color: #3778df;
+  box-shadow: 0 0 0 2px rgba(55, 120, 223, .13);
+}
+
+.port-tools {
+  display: flex;
+  gap: 14px;
+  padding: 8px 2px;
+  border-bottom: 1px solid #e8edf2;
+}
+
+.port-tools button {
+  padding: 2px;
+  color: #2668cf;
+  font-size: 12px;
+}
+
+.port-options {
+  max-height: 190px;
+  overflow-y: auto;
+  padding-top: 4px;
+}
+
+.port-options label {
+  display: grid;
+  grid-template-columns: 18px 1fr auto;
+  align-items: center;
+  min-height: 30px;
+  padding: 3px 5px;
+  border-radius: 3px;
+  color: #344054;
+  cursor: pointer;
+}
+
+.port-options label:hover {
+  background: #f4f7fa;
+}
+
+.port-options label.disabled {
+  color: #9aa5b3;
+  cursor: not-allowed;
+}
+
+.port-options label small {
+  color: #8a96a6;
+  font-size: 10px;
+}
+
+.port-options input {
+  accent-color: #246bda;
+}
